@@ -14,7 +14,7 @@ function Open-PSChocolatey {
     $Commands = $Chocolatey.Container.GetInstance($TypeSearch)
     foreach ($Command in $Commands)
     {
-        $CommandName = $Command.ToString().Split(".")[-1].Replace("Chocolatey", "")
+        $CommandName = $Command.ToString().Split(".")[-1].Replace("Chocolatey", "").Replace("Command", "")
         $Script:Chocolatey.Commands[$CommandName] = $Command
     }
 }
