@@ -3,9 +3,19 @@
 Add-Type -path $PSScriptRoot\Module\PSChocolatey\bin\x86\PSChocolatey.dll
 Add-Type -path $PSScriptRoot\Module\PSChocolatey\bin\x86\Chocolatey.dll
 
+
+
+
 [PSChoco.Interfaces.Helper].DeclaredMethods | ft
-[PSChoco.Interfaces.Helper]::temp_call()
+
+[PSChoco.Interfaces.Helper]::install("winrar")
+[PSChoco.Interfaces.Helper]::uninstall("winrar")
+
+
+
 return
+
+
 #[PSChoco.Interfaces.Helper]::temp_call();
 #
 #[ChocolateyInstallCommand]
