@@ -22,10 +22,6 @@ namespace PSChoco.Interfaces {
             }
         }
 
-        public static void waffles()
-        {
-
-        }
         public static object temp_call()
         {
             string packageName = "winrar";
@@ -55,6 +51,36 @@ namespace PSChoco.Interfaces {
         /*
 
         */
+
+        #region Install Simplex
+        public static void install(string packagename)
+        {
+            Console.WriteLine("Helper.install<T>(string packagename)");
+            
+            ChocolateyConfiguration config = Configuration;
+            config.PackageNames = packagename;
+
+            InstallCommandConfiguration installconfig = new InstallCommandConfiguration();
+            installconfig.NotSilent = true;
+
+            run(typeof(ChocolateyInstallCommand), config, installconfig);
+        }
+        public static void uninstall(string packagename)
+        {
+            Console.WriteLine("Helper.install<T>(string packagename)");
+            
+            ChocolateyConfiguration config = Configuration;
+            config.PackageNames = packagename;
+            
+            UninstallCommandConfiguration uninstall = new UninstallCommandConfiguration();
+
+            uninstall.NotSilent = true;
+
+            run(typeof(ChocolateyUninstallCommand), config, uninstall); 
+        }
+        #endregion
+
+        #region run
         public static void run(Type tcommand, ChocolateyConfiguration config, CommandConfiguration runconfig)
         {
             Console.WriteLine("Helper.run<T>(ChocolateyConfiguration config)");
@@ -81,7 +107,7 @@ namespace PSChoco.Interfaces {
             cmd.run(config);
 
         }
-
+        #endregion
         public static void parse<T>(T config, OptionSet optionset)
         {
             Type installtype = typeof(T);
