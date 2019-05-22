@@ -1,0 +1,60 @@
+Import-Module "$PSScriptRoot\Module\PSChocolatey\PSChocolatey.psm1" -force
+
+Open-PSChocolatey
+Get-PSChocolateyList -LocalOnly
+
+
+
+$Commands = Get-PSChocolateyCommands
+
+foreach ($Command in $Commands.GetEnumerator())
+{
+    $CheckCommand = Get-Command "*-PSChocolatey$($Command.Key)"
+    if (-not $CheckCommand)
+    {
+        $BlackList = ("Version", "Update")
+        if ($BlackList -contains $Command.Key) { Continue; }
+        $Command
+    }
+}
+
+ 
+
+return
+
+$Command = $Commands.GetEnumerator() | Select -last 1
+
+
+
+
+#$Command.Value | gm
+
+#$Command.Value.configure_argument_parser.OverLoadDefinitions
+
+$OptionSet = [chocolatey.infrastructure.commandline.OptionSet]::new()
+$config = [chocolatey.infrastructure.app.configuration.ChocolateyConfiguration]::new()
+
+$Command.Value.configure_argument_parser( $OptionSet, $Config)
+$OptionSet | gm -force * -view All | ft -a
+$OptionSet[0] | gm
+#$OptionSet.Description | fl *
+#$Command.Value.help_message
+
+#$Commands = Get-PSChocolateyCommands
+#$Commands["APIKey"] | gm | ft -a
+
+
+#Invoke-PSChocolateyAPIKey
+<#
+Add-PSChocolateySource -Name "Bob" -Source "https://somewhere/out/there/api/v2/"
+Disable-PSChocolateySource -Name "Bob"
+Get-PSChocolateySource -Name "Bob"
+Enable-PSChocolateySource -Name "Bob"
+Get-PSChocolateySource -Name "Bob"
+Remove-PSChocolateySource -Name "Bob"
+Get-PSChocolateySource -Name "Bob"
+#>
+
+#Get-PSChocolateySources
+
+#Get-PSChocolateyList -LocalOnly
